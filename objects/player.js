@@ -1,13 +1,17 @@
 export class Player
 {
-    constructor(x, y, width, height, color, velocityY) 
+    constructor(x, y, width, height, color, speedY, upKey, downKey) 
     {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
-        this.velocityY = velocityY;
+        this.speedY = speedY;
+        this.upKey = upKey;
+        this.downKey = downKey;
+        this.isMovingUp = false;
+        this.isMovingDown = false;
     }
 
     draw(ctx) 
@@ -18,6 +22,6 @@ export class Player
 
     update()
     {
-        this.y += this.velocityY;
+        this.y += (this.isMovingUp ? -this.speedY : 0) + (this.isMovingDown ? this.speedY : 0);
     }
 }

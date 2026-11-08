@@ -1,13 +1,13 @@
 export class Ball
 {
-    constructor(x, y, radius, color, velocityX, velocityY)
+    constructor(x, y, radius, color, speedX, speedY)
     {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+        this.speedX = speedX;
+        this.speedY = speedY;
     }
 
     draw(ctx)
@@ -20,7 +20,7 @@ export class Ball
 
     update()
     {
-        this.x += this.velocityX;
-        this.y += this.velocityY;
+        this.x += this.speedX;
+        this.y += this.speedY;
     }
 }

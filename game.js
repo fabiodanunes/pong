@@ -8,12 +8,12 @@ const canvasHeight = canvas.height;
 
 const playerWidth = 10;
 const playerHeight = 100;
-const playerMargin = 20;
-const playerVelocityY = 2;
+const playerMargin = 50;
+const playerSpeedY = 2;
 
 const ballRadius = 7;
-const ballVelocityX = 2;
-const ballVelocityY = 0;
+const ballSpeedX = 2;
+const ballSpeedY = 0;
 
 // player 1
 const player1 = new Player
@@ -23,7 +23,9 @@ const player1 = new Player
     playerWidth,
     playerHeight,
     "rgb(200 0 0)",
-    playerVelocityY
+    playerSpeedY,
+    "KeyW",
+    "KeyS"
 );
 
 // player 2
@@ -34,8 +36,13 @@ const player2 = new Player
     playerWidth,
     playerHeight,
     "rgb(0 0 200)",
-    playerVelocityY
+    playerSpeedY,
+    "ArrowUp",
+    "ArrowDown"
 );
+
+// all players
+const players = [player1, player2];
 
 // ball
 const ball = new Ball
@@ -44,23 +51,44 @@ const ball = new Ball
     canvasHeight / 2,
     ballRadius,
     "rgb(255 255 255)",
-    ballVelocityX,
-    ballVelocityY
+    ballSpeedX,
+    ballSpeedY
 );
 
-function GameLoop()
+// all game elements
+const elements = [player1, player2, ball];
+
+document.addEventListener("keydown", (event) =>
+{
+    players.forEach(player =>
+    {
+        if(event.code === player.upKey) player.isMovingUp = true;
+        if(event.code === player.downKey) player.isMovingDown = true;
+    });
+});
+
+document.addEventListener("keyup", (event) =>
+{
+    players.forEach(player =>
+    {
+        if(event.code === player.upKey) player.isMovingUp = false;
+        if(event.code === player.downKey) player.isMovingDown = false;
+    });
+});
+
+function gameLoop()
 {
     // clear
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     // update
-    // ball.update();
-    
-    // draw
-    ball.draw(ctx);
+    elements.forEach(element => {
+        element.update();
+        element.draw(ctx);
+    });
 
     // recall
-    requestAnimationFrame(GameLoop);
+    requestAnimationFrame(gameLoop);
 }
 
-requestAnimationFrame(GameLoop);
+requestAnimationFrame(gameLoop);
