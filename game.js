@@ -76,6 +76,13 @@ function gameLoop()
         element.update(canvas);
     });
 
+    ball.checkPlayersCollision(players);
+    
+    if(ball.playerColliding !== null)
+    {
+        ball.bounceFromPlayers();
+    }
+
     // draw
     elements.forEach(element => {
         element.draw(ctx);

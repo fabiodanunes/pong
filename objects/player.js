@@ -24,7 +24,7 @@ export class Player
     update(canvas)
     {
         this.move();
-        this.checkCanvasBounds(canvas);
+        this.bounceFromWalls(canvas);
     }
 
     move()
@@ -32,7 +32,7 @@ export class Player
         this.y += (this.isMovingUp ? -this.speedY : 0) + (this.isMovingDown ? this.speedY : 0);
     }
 
-    checkCanvasBounds(canvas)
+    bounceFromWalls(canvas)
     {
         if(this.y < 0) this.y = 0;
         if(this.y + this.height > canvas.height) this.y = canvas.height - this.height;
