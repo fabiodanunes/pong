@@ -5,8 +5,9 @@ export class Ball
         this.radius = 7;
         this.speedX = -2;
         this.speedY = 2;
-        this.maxSpeed = 20; // TODO: implement max speed when colliding with players
-        this.playerColliding = null;
+        this.speedIncrement = 0.5;
+        this.maxSpeed = 20;
+        this.maxBounceAngle = Math.PI / 4; // 45 degrees
 
         this.x = x;
         this.y = y;
@@ -58,22 +59,30 @@ export class Ball
         }
     }
 
-    checkPlayersCollision(players)
+    bounceFromPlayers(players)
     {
         players.forEach(player =>
         {
             if(this.x + this.radius > player.x && this.x - this.radius < player.x + player.width &&
                this.y + this.radius > player.y && this.y - this.radius < player.y + player.height)
             {
-                this.playerColliding = player;
+                let playerCenterY = player.y + player.height / 2;
+                let intersectY = this.y - playerCenterY;
+
+                let normalIntersectY = intersectY / (player.height / 2);
+                let clampedIntersectY = Math.max(-1, Math.min(1, normalIntersectY));
+
+                let bounceAngle = clampedIntersectY * this.maxBounceAngle;
+
+                let direction = this.speedX > 0 ? -1 : 1;
+                
+                let totalSpeed = Math.min(this.maxSpeed, Math.hypot(this.speedX, this.speedY) + this.speedIncrement);
+
+                this.x = player.x + (this.speedX > 0 ? -this.radius : player.width + this.radius);
+
+                this.speedX = direction * totalSpeed * Math.cos(bounceAngle);
+                this.speedY = totalSpeed * Math.sin(bounceAngle);
             }
         });
-    }
-
-    bounceFromPlayers()
-    {
-        this.x = this.playerColliding.x + (this.speedX > 0 ? -this.radius : this.playerColliding.width + this.radius);
-        this.speedX = -this.speedX;
-        this.playerColliding = null;
     }
 }
