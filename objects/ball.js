@@ -1,13 +1,14 @@
 export class Ball
 {
-    constructor(x, y, radius, color, speedX, speedY)
+    constructor(x, y, color)
     {
+        this.radius = 7;
+        this.speedX = 2;
+        this.speedY = 2;
+
         this.x = x;
         this.y = y;
-        this.radius = radius;
         this.color = color;
-        this.speedX = speedX;
-        this.speedY = speedY;
     }
 
     draw(ctx)
@@ -18,9 +19,24 @@ export class Ball
         ctx.fill();
     }
 
-    update()
+    update(canvas)
+    {
+        this.move();
+        this.checkCanvasBounds(canvas);
+    }
+
+    move()
     {
         this.x += this.speedX;
         this.y += this.speedY;
+    }
+
+    checkCanvasBounds(canvas)
+    {
+        if(this.y < this.radius) this.speedY = -this.speedY;
+        if(this.y > canvas.height - this.radius) this.speedY = -this.speedY;
+
+        if(this.x < this.radius) this.speedX = -this.speedX;
+        if(this.x > canvas.width - this.radius) this.speedX = -this.speedX;
     }
 }

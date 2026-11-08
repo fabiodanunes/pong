@@ -9,11 +9,6 @@ const canvasHeight = canvas.height;
 const playerWidth = 10;
 const playerHeight = 100;
 const playerMargin = 50;
-const playerSpeedY = 2;
-
-const ballRadius = 7;
-const ballSpeedX = 2;
-const ballSpeedY = 0;
 
 // player 1
 const player1 = new Player
@@ -23,7 +18,6 @@ const player1 = new Player
     playerWidth,
     playerHeight,
     "rgb(200 0 0)",
-    playerSpeedY,
     "KeyW",
     "KeyS"
 );
@@ -36,7 +30,6 @@ const player2 = new Player
     playerWidth,
     playerHeight,
     "rgb(0 0 200)",
-    playerSpeedY,
     "ArrowUp",
     "ArrowDown"
 );
@@ -49,10 +42,7 @@ const ball = new Ball
 (
     canvasWidth / 2,
     canvasHeight / 2,
-    ballRadius,
-    "rgb(255 255 255)",
-    ballSpeedX,
-    ballSpeedY
+    "rgb(255 255 255)"
 );
 
 // all game elements
@@ -83,7 +73,11 @@ function gameLoop()
 
     // update
     elements.forEach(element => {
-        element.update();
+        element.update(canvas);
+    });
+
+    // draw
+    elements.forEach(element => {
         element.draw(ctx);
     });
 
