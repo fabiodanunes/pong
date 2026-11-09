@@ -67,8 +67,16 @@ document.addEventListener("keydown", (event) =>
 {
     players.forEach(player =>
     {
-        if(event.code === player.upKey) player.isMovingUp = true;
-        if(event.code === player.downKey) player.isMovingDown = true;
+        if(event.code === player.upKey)
+        {
+            event.preventDefault();
+            player.isMovingUp = true;
+        }
+        if(event.code === player.downKey)
+        {
+            event.preventDefault();
+            player.isMovingDown = true;
+        }
     });
 });
 
@@ -78,6 +86,15 @@ document.addEventListener("keyup", (event) =>
     {
         if(event.code === player.upKey) player.isMovingUp = false;
         if(event.code === player.downKey) player.isMovingDown = false;
+    });
+});
+
+window.addEventListener("blur", () =>
+{
+    players.forEach(player => 
+    {
+        player.isMovingUp = false;
+        player.isMovingDown = false;
     });
 });
 

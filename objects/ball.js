@@ -11,7 +11,7 @@ export class Ball
         this.y = this.initialY;
         this.radius = 7;
         this.speedX = this.initialSpeed * ((Math.random() >  0.5) ? 1 : -1);
-        this.speedY = this.initialSpeed * (-1 + Math.random() * (2 - (-1)));
+        this.speedY = this.initialSpeed * (-1 + Math.random() * (1 - (-1)));
         this.speedIncrement = 0.3;
         this.maxSpeed = 20;
         this.maxBounceAngle = Math.PI / 4; // 45 degrees
@@ -90,6 +90,6 @@ export class Ball
         this.x = this.initialX;
         this.y = this.initialY;
         this.speedX = this.initialSpeed * direction;
-        this.speedY = this.initialSpeed * (-1 + Math.random() * (2 - (-1)));
+        this.speedY = this.initialSpeed * (-1 + Math.random() * (1 - (-1)));
     }
 }
