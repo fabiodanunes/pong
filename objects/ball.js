@@ -1,17 +1,21 @@
 export class Ball
 {
-    constructor(x, y, color)
+    constructor(initialX, initialY, initialSpeed, color)
     {
+        this.initialX = initialX;
+        this.initialY = initialY;
+        this.initialSpeed = initialSpeed;
+        this.color = color;
+
+        this.x = this.initialX;
+        this.y = this.initialY;
         this.radius = 7;
-        this.speedX = -2;
-        this.speedY = 2;
-        this.speedIncrement = 0.5;
+        this.speedX = -this.initialSpeed;
+        this.speedY = this.initialSpeed;
+        this.speedIncrement = 0.3;
         this.maxSpeed = 20;
         this.maxBounceAngle = Math.PI / 4; // 45 degrees
-
-        this.x = x;
-        this.y = y;
-        this.color = color;
+        this.direction = this.speedX > 0 ? -1 : 1;
     }
 
     draw(ctx)
@@ -46,17 +50,11 @@ export class Ball
             this.y = canvas.height - this.radius;
             this.speedY = -this.speedY;
         }
+    }
 
-        if(this.x < this.radius)
-        {
-            this.x = this.radius;
-            this.speedX = -this.speedX;
-        }
-        if(this.x > canvas.width - this.radius)
-        {
-            this.x = canvas.width - this.radius;
-            this.speedX = -this.speedX;
-        }
+    checkIfBallIsOut(canvas)
+    {
+        return this.x < this.radius || this.x > canvas.width - this.radius;
     }
 
     bounceFromPlayers(players)
@@ -74,15 +72,24 @@ export class Ball
 
                 let bounceAngle = clampedIntersectY * this.maxBounceAngle;
 
-                let direction = this.speedX > 0 ? -1 : 1;
-                
                 let totalSpeed = Math.min(this.maxSpeed, Math.hypot(this.speedX, this.speedY) + this.speedIncrement);
+                
+                this.direction = this.direction * -1;
 
                 this.x = player.x + (this.speedX > 0 ? -this.radius : player.width + this.radius);
 
-                this.speedX = direction * totalSpeed * Math.cos(bounceAngle);
+                this.speedX = this.direction * totalSpeed * Math.cos(bounceAngle);
                 this.speedY = totalSpeed * Math.sin(bounceAngle);
             }
         });
+    }
+
+    resetPosition()
+    {
+        this.x = this.initialX;
+        this.y = this.initialY;
+        this.speedX = -this.initialSpeed;
+        this.speedY = this.initialSpeed;
+        this.direction = this.direction * -1;
     }
 }

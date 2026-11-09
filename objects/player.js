@@ -1,11 +1,9 @@
 export class Player
 {
-    constructor(x, y, width, height, color, upKey, downKey) 
-    {
-        this.speedY = 2;
-        
-        this.x = x;
-        this.y = y;
+    constructor(initialX, initialY, width, height, color, upKey, downKey) 
+    {   
+        this.initialX = initialX;
+        this.initialY = initialY;
         this.width = width;
         this.height = height;
         this.color = color;
@@ -13,6 +11,10 @@ export class Player
         this.downKey = downKey;
         this.isMovingUp = false;
         this.isMovingDown = false;
+
+        this.x = this.initialX;
+        this.y = this.initialY;
+        this.speedY = 3;
     }
 
     draw(ctx) 
@@ -24,7 +26,7 @@ export class Player
     update(canvas)
     {
         this.move();
-        this.detectWallsCollisions(canvas);
+        this.checkBounds(canvas);
     }
 
     move()
@@ -32,9 +34,15 @@ export class Player
         this.y += (this.isMovingUp ? -this.speedY : 0) + (this.isMovingDown ? this.speedY : 0);
     }
 
-    detectWallsCollisions(canvas)
+    checkBounds(canvas)
     {
         if(this.y < 0) this.y = 0;
         if(this.y + this.height > canvas.height) this.y = canvas.height - this.height;
+    }
+
+    resetPosition()
+    {
+        this.x = this.initialX;
+        this.y = this.initialY;
     }
 }

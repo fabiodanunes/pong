@@ -1,5 +1,6 @@
 import { Player } from "./objects/player.js";
 import { Ball } from "./objects/ball.js";
+import { GameManager } from "./gameManager.js";
 
 const canvas = document.getElementById("pongCanvas");
 const ctx = canvas.getContext("2d");
@@ -42,11 +43,19 @@ const ball = new Ball
 (
     canvasWidth / 2,
     canvasHeight / 2,
+    5,
     "rgb(255 255 255)"
 );
 
 // all game elements
 const elements = [player1, player2, ball];
+
+const gameManager = new GameManager
+(
+    canvas, 
+    players, 
+    ball
+);
 
 document.addEventListener("keydown", (event) =>
 {
@@ -77,6 +86,8 @@ function gameLoop()
     });
 
     ball.bounceFromPlayers(players);
+    
+    if(ball.checkIfBallIsOut(canvas)) gameManager.resetGame();
 
     // draw
     elements.forEach(element => {
