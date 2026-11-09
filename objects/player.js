@@ -14,7 +14,7 @@ export class Player
 
         this.x = this.initialX;
         this.y = this.initialY;
-        this.speedY = 2;
+        this.speedY = 120;
         this.score = 0;
     }
 
@@ -24,15 +24,15 @@ export class Player
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
-    update(canvas)
+    update(canvas, deltaTime)
     {
-        this.move();
+        this.move(deltaTime);
         this.checkBounds(canvas);
     }
 
-    move()
+    move(deltaTime)
     {
-        this.y += (this.isMovingUp ? -this.speedY : 0) + (this.isMovingDown ? this.speedY : 0);
+        this.y += ((this.isMovingUp ? -this.speedY : 0) + (this.isMovingDown ? this.speedY : 0)) * deltaTime;
     }
 
     checkBounds(canvas)

@@ -11,9 +11,9 @@ export class Ball
         this.y = this.initialY;
         this.radius = 7;
         this.speedX = this.initialSpeed * ((Math.random() >  0.5) ? 1 : -1);
-        this.speedY = this.initialSpeed * (-1 + Math.random() * (1 - (-1)));
-        this.speedIncrement = 0.3;
-        this.maxSpeed = 20;
+        this.speedY = this.initialSpeed * (-1 + Math.random() * 2); // random between -1 and 1
+        this.speedIncrement = 20;
+        this.maxSpeed = 800;
         this.maxBounceAngle = Math.PI / 4; // 45 degrees
     }
 
@@ -25,16 +25,16 @@ export class Ball
         ctx.fill();
     }
 
-    update(canvas)
+    update(canvas, deltaTime)
     {
-        this.move();
+        this.move(deltaTime);
         this.bounceFromWalls(canvas);
     }
 
-    move()
+    move(deltaTime)
     {
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.x += this.speedX * deltaTime;
+        this.y += this.speedY * deltaTime;
     }
 
     bounceFromWalls(canvas)
@@ -90,6 +90,6 @@ export class Ball
         this.x = this.initialX;
         this.y = this.initialY;
         this.speedX = this.initialSpeed * direction;
-        this.speedY = this.initialSpeed * (-1 + Math.random() * (1 - (-1)));
+        this.speedY = this.initialSpeed * (-1 + Math.random() * 2);
     }
 }

@@ -44,7 +44,7 @@ const ball = new Ball
 (
     canvasWidth / 2,
     canvasHeight / 2,
-    3,
+    180,
     "rgb(255 255 255)"
 );
 
@@ -98,13 +98,19 @@ window.addEventListener("blur", () =>
     });
 });
 
-function gameLoop()
+let lastTime = 0;
+
+function gameLoop(currentTime)
 {
+    // deltaTime
+    const deltaTime = Math.min((currentTime - lastTime) / 1000, 0.03);
+    lastTime = currentTime;
+
     // clear
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     // update
-    elements.forEach(element => element.update(canvas));
+    elements.forEach(element => element.update(canvas, deltaTime));
 
     ball.bounceFromPlayers(players);
     
