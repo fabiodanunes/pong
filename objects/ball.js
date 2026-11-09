@@ -10,12 +10,11 @@ export class Ball
         this.x = this.initialX;
         this.y = this.initialY;
         this.radius = 7;
-        this.speedX = -this.initialSpeed;
-        this.speedY = this.initialSpeed;
+        this.speedX = this.initialSpeed * ((Math.random() >  0.5) ? 1 : -1);
+        this.speedY = this.initialSpeed * (-1 + Math.random() * (2 - (-1)));
         this.speedIncrement = 0.3;
         this.maxSpeed = 20;
         this.maxBounceAngle = Math.PI / 4; // 45 degrees
-        this.direction = this.speedX > 0 ? -1 : 1;
     }
 
     draw(ctx)
@@ -52,9 +51,9 @@ export class Ball
         }
     }
 
-    checkIfBallIsOut(canvas)
+    isOut(canvas)
     {
-        return this.x < this.radius || this.x > canvas.width - this.radius;
+        return this.x < 0 - this.radius || this.x > canvas.width + this.radius;
     }
 
     bounceFromPlayers(players)
@@ -74,11 +73,11 @@ export class Ball
 
                 let totalSpeed = Math.min(this.maxSpeed, Math.hypot(this.speedX, this.speedY) + this.speedIncrement);
                 
-                this.direction = this.direction * -1;
+                let direction = (this.speedX > 0 ? 1 : -1) * -1;
 
                 this.x = player.x + (this.speedX > 0 ? -this.radius : player.width + this.radius);
 
-                this.speedX = this.direction * totalSpeed * Math.cos(bounceAngle);
+                this.speedX = direction * totalSpeed * Math.cos(bounceAngle);
                 this.speedY = totalSpeed * Math.sin(bounceAngle);
             }
         });
@@ -86,10 +85,11 @@ export class Ball
 
     resetPosition()
     {
+        let direction = (this.speedX > 0 ? 1 : -1) * -1;
+        
         this.x = this.initialX;
         this.y = this.initialY;
-        this.speedX = -this.initialSpeed;
-        this.speedY = this.initialSpeed;
-        this.direction = this.direction * -1;
+        this.speedX = this.initialSpeed * direction;
+        this.speedY = this.initialSpeed * (-1 + Math.random() * (2 - (-1)));
     }
 }

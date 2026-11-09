@@ -14,7 +14,8 @@ export class Player
 
         this.x = this.initialX;
         this.y = this.initialY;
-        this.speedY = 3;
+        this.speedY = 2;
+        this.score = 0;
     }
 
     draw(ctx) 
@@ -44,5 +45,10 @@ export class Player
     {
         this.x = this.initialX;
         this.y = this.initialY;
+    }
+
+    addPoint()
+    {
+        this.score++;
     }
 }

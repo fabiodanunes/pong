@@ -1,6 +1,7 @@
 import { Player } from "./objects/player.js";
 import { Ball } from "./objects/ball.js";
 import { GameManager } from "./gameManager.js";
+import { Scoreboard } from "./objects/scoreboard.js";
 
 const canvas = document.getElementById("pongCanvas");
 const ctx = canvas.getContext("2d");
@@ -43,7 +44,7 @@ const ball = new Ball
 (
     canvasWidth / 2,
     canvasHeight / 2,
-    5,
+    3,
     "rgb(255 255 255)"
 );
 
@@ -52,9 +53,14 @@ const elements = [player1, player2, ball];
 
 const gameManager = new GameManager
 (
-    canvas, 
     players, 
     ball
+);
+
+const scoreboard = new Scoreboard
+(
+    players,
+    canvasWidth
 );
 
 document.addEventListener("keydown", (event) =>
@@ -81,18 +87,16 @@ function gameLoop()
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     // update
-    elements.forEach(element => {
-        element.update(canvas);
-    });
+    elements.forEach(element => element.update(canvas));
 
     ball.bounceFromPlayers(players);
     
-    if(ball.checkIfBallIsOut(canvas)) gameManager.resetGame();
+    if(ball.isOut(canvas)) gameManager.updateScoreboard();
 
     // draw
-    elements.forEach(element => {
-        element.draw(ctx);
-    });
+    scoreboard.draw(ctx);
+
+    elements.forEach(element => element.draw(ctx));
 
     // recall
     requestAnimationFrame(gameLoop);

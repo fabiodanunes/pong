@@ -1,8 +1,7 @@
 export class GameManager
 {
-    constructor(canvas, players, ball)
+    constructor(players, ball)
     {
-        this.canvas = canvas;
         this.players = players;
         this.ball = ball;
     }
@@ -11,5 +10,13 @@ export class GameManager
     {
         this.players.forEach(player => player.resetPosition());
         this.ball.resetPosition();
+    }
+
+    updateScoreboard()
+    {
+        if(this.ball.speedX > 0) this.players[0].addPoint();
+        else this.players[1].addPoint();
+
+        this.resetGame();
     }
 }
