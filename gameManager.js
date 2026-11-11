@@ -1,14 +1,15 @@
 export class GameManager
 {
-    constructor(players, ball)
+    constructor(players, ball, announcer)
     {
         this.players = players;
         this.ball = ball;
+        this.announcer = announcer;
 
         this.state = "serve";
-        this.startDelay = 3000;
-        this.startCountdown = true;
-        this.countdownStart = 0;
+        this.serveDelay = 3000;
+        this.countdownStart = null;
+        this.serveTimeLeft = 0;
     }
 
     resetGame()
@@ -26,21 +27,19 @@ export class GameManager
         this.state = "serve";
     }
 
-    countdownTimer(currentTime)
+    serveTimer(currentTime)
     {
-        if(this.startCountdown)
-        {
-            this.countdownStart = currentTime;
-            this.startCountdown = false;
-        }
+        if(this.countdownStart === null) this.countdownStart = currentTime;
 
         let timeDiff = currentTime - this.countdownStart;
 
-        if(timeDiff >= this.startDelay)
+        this.serveTimeLeft = Math.ceil((this.serveDelay - timeDiff) / 1000);
+
+        if(timeDiff >= this.serveDelay)
         {
             this.state = "play";
-            this.startCountdown = true;
-            this.countdownStart = 0;
+            this.countdownStart = null;
+            this.serveTimeLeft = 0;
         }
     }
 }

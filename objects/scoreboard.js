@@ -14,15 +14,10 @@ export class Scoreboard
         {
             let position = i === 0 ? 0.25 : 0.75;
 
-            this.drawPlayerScore(ctx, player, position * this.canvasWidth);
+            ctx.font = "45px Silkscreen";
+            ctx.textAlign = "center";
+            ctx.fillStyle = player.color;
+            ctx.fillText(player.score, position * this.canvasWidth, this.y);
         });
-    }
-
-    drawPlayerScore(ctx, player, x)
-    {
-        ctx.font = "45px Silkscreen";
-        ctx.textAlign = "center";
-        ctx.fillStyle = player.color;
-        ctx.fillText(player.score, x, this.y);
     }
 }
