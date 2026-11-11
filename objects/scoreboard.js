@@ -16,8 +16,6 @@ export class Scoreboard
 
             this.drawPlayerScore(ctx, player, position * this.canvasWidth);
         });
-
-        
     }
 
     drawPlayerScore(ctx, player, x)

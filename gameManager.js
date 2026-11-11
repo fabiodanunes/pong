@@ -4,6 +4,11 @@ export class GameManager
     {
         this.players = players;
         this.ball = ball;
+
+        this.state = "serve";
+        this.startDelay = 3000;
+        this.startCountdown = true;
+        this.countdownStart = 0;
     }
 
     resetGame()
@@ -18,5 +23,24 @@ export class GameManager
         else this.players[1].addPoint();
 
         this.resetGame();
+        this.state = "serve";
+    }
+
+    countdownTimer(currentTime)
+    {
+        if(this.startCountdown)
+        {
+            this.countdownStart = currentTime;
+            this.startCountdown = false;
+        }
+
+        let timeDiff = currentTime - this.countdownStart;
+
+        if(timeDiff >= this.startDelay)
+        {
+            this.state = "play";
+            this.startCountdown = true;
+            this.countdownStart = 0;
+        }
     }
 }

@@ -110,15 +110,17 @@ function gameLoop(currentTime)
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     // update
-    elements.forEach(element => element.update(canvas, deltaTime));
+    if(gameManager.state === "play")
+    {
+        players.forEach(player => player.update(canvas, deltaTime));
+        ball.update(canvas, deltaTime, players);
 
-    ball.bounceFromPlayers(players);
-    
-    if(ball.isOut(canvas)) gameManager.updateScoreboard();
+        if(ball.isOut(canvas)) gameManager.updateScoreboard();
+    }
+    if(gameManager.state === "serve") gameManager.countdownTimer(currentTime);
 
     // draw
     scoreboard.draw(ctx);
-
     elements.forEach(element => element.draw(ctx));
 
     // recall

@@ -25,10 +25,11 @@ export class Ball
         ctx.fill();
     }
 
-    update(canvas, deltaTime)
+    update(canvas, deltaTime, players)
     {
         this.move(deltaTime);
         this.bounceFromWalls(canvas);
+        this.bounceFromPlayers(players);
     }
 
     move(deltaTime)
