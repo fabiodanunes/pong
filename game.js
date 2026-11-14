@@ -22,7 +22,8 @@ const player1 = new Player
     playerHeight,
     "rgb(200 0 0)",
     "KeyW",
-    "KeyS"
+    "KeyS",
+    "P1"
 );
 
 // player 2
@@ -34,7 +35,8 @@ const player2 = new Player
     playerHeight,
     "rgb(0 0 200)",
     "ArrowUp",
-    "ArrowDown"
+    "ArrowDown",
+    "P2"
 );
 
 // all players
@@ -86,6 +88,11 @@ document.addEventListener("keydown", (event) =>
             player.isMovingDown = true;
         }
     });
+
+    if(event.code === "Enter")
+    {
+        if(gameManager.state === "gameOver") gameManager.resetGame();
+    }
 });
 
 document.addEventListener("keyup", (event) =>
@@ -130,7 +137,10 @@ function gameLoop(currentTime)
     // draw
     elements.forEach(element => element.draw(ctx));
 
-    if(gameManager.state === "serve") announcer.draw(ctx, gameManager.serveTimeLeft, "rgb(255 255 255)");
+    if(gameManager.state === "serve") 
+        announcer.draw(ctx, gameManager.serveTimeLeft, "rgb(255 255 255)");
+    else if(gameManager.state === "gameOver") 
+        announcer.draw(ctx, `WINNER ${gameManager.winner.name}`, gameManager.winner.color);
 
     // recall
     requestAnimationFrame(gameLoop);

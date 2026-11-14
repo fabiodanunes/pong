@@ -1,6 +1,6 @@
 export class Player
 {
-    constructor(initialX, initialY, width, height, color, upKey, downKey) 
+    constructor(initialX, initialY, width, height, color, upKey, downKey, name) 
     {   
         this.initialX = initialX;
         this.initialY = initialY;
@@ -9,9 +9,10 @@ export class Player
         this.color = color;
         this.upKey = upKey;
         this.downKey = downKey;
+        this.name = name;
+
         this.isMovingUp = false;
         this.isMovingDown = false;
-
         this.x = this.initialX;
         this.y = this.initialY;
         this.speedY = 120;
@@ -50,5 +51,10 @@ export class Player
     addPoint()
     {
         this.score++;
+    }
+
+    resetScore()
+    {
+        this.score = 0;
     }
 }

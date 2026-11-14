@@ -61,8 +61,10 @@ export class Ball
     {
         players.forEach(player =>
         {
-            if(this.x + this.radius > player.x && this.x - this.radius < player.x + player.width &&
-               this.y + this.radius > player.y && this.y - this.radius < player.y + player.height)
+            if(this.x + this.radius > player.x && 
+                this.x - this.radius < player.x + player.width &&
+                this.y + this.radius > player.y && 
+                this.y - this.radius < player.y + player.height)
             {
                 let playerCenterY = player.y + player.height / 2;
                 let intersectY = this.y - playerCenterY;
